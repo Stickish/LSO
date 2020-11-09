@@ -1,10 +1,14 @@
 %%
 clear, clc
-
+% 
+% dimX = 8;
+% dimY = 6;
+% k = 3;
+% com = [1 48; 2 42; 3 43];
 % initilization
 theta = 2;
 VLSI_8_6_7;
-u = ones(dimX*dimY*2,1001)./7;
+u = ones(dimX*dimY*2,1001)./k;
 mex gsp.c;
 h = zeros(1000,1);
 alpha = zeros(1000,1);
@@ -53,7 +57,7 @@ for t = 1 : 1000
         last = 0;
         for l = 1 : length(okcom)
             first = last+1;
-            slask = find(newnl(last+1:length(newnl)) == okcom(l));
+            slask = find(newnl(first:length(newnl)) == com(okcom(l),1));
             last = slask(1)+first-1;
             
             if ismember(i,newnl(first:last)) == true
@@ -82,4 +86,19 @@ for t = 1 : 1000
     % end for loop and update t
 end
 
-visagrind(dimX,dimY,newnl,okcom,pi,25);
+upper_bound = min(h)
+
+shift = 25;
+visagrid(dimX,dimY,newnl,com,pi,shift);
+
+%%
+clear;
+clc;
+
+dimX = 8;
+dimY = 6;
+shift = 25;
+pip = ones(dimX*dimY*2,1)*0.1;
+newnl = [48 47 46 45 44 43 42 41 54 53 52 51 50 49 1 42 60 59 58 57 56 55 2 43 66 65 64 63 62 61 3];
+com = [1 48; 2 42; 3 43];
+visagrid(dimX,dimY,newnl,com,pip,shift);
