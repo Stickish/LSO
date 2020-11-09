@@ -83,6 +83,21 @@ for t = 1 : 1000
        theta = theta*0.95; 
     end
     
+    %
+    x = zeros(dimX*dimY*2,dimX*dimY*2,k);
+    last = 0;
+    for m=1:length(okcom)
+        first = last+1;
+        slask = find(newnl(first:length(newnl)) == com(okcom(m),1));
+        last = slask(1)+first-1;
+        for i=first:last-1
+            x(newnl(i),newnl(i+1),m) = 1;
+            x(newnl(i+1),newnl(i),m) = 1;
+        end
+    end
+    
+    
+    
     % end for loop and update t
 end
 
