@@ -14,6 +14,8 @@ h = zeros(1000,1);
 alpha = zeros(1000,1);
 hs = k;
 
+
+
 % for loop
 for t = 1 : 1000
 
@@ -96,11 +98,27 @@ for t = 1 : 1000
         end
     end
     
-    
-    
+    if t == 1
+        x_bar = x;
+        x_temp = x_bar;
+        alpha_bar = alpha(t);
+    else
+        alpha_temp = alpha_bar;
+        alpha_bar = alpha_bar + alpha(t);
+        x_bar = alpha_temp/alpha_bar * x_temp + alpha(t)/alpha_bar * x;
+        x_temp = x_bar;
+    end
+
     % end for loop and update t
 end
 
+z_bar = 0;
+for l = 1:length(com(:,1))
+    if sum(x_bar(com(l,1),:,l)) ~= 0 && sum(x_bar(:,com(l,2),l)) ~= 0
+        z_bar = z_bar + 1; 
+    end
+end
+    
 upper_bound = min(h)
 
 shift = 25;
